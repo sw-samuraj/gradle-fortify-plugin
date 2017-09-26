@@ -29,21 +29,8 @@
  */
 package cz.swsamuraj.gradle.fortify
 
-import org.gradle.api.Plugin
-import org.gradle.api.Project
+class FortifyExtension {
 
-class FortifyPlugin implements Plugin<Project> {
+    String fortifyBuildID
 
-    @Override
-    void apply(Project project) {
-
-        project.extensions.create('fortify', FortifyExtension).with {
-            fortifyBuildID = "${project.projectDir}/src/main/webapp/WEB-INF/wsdl"
-        }
-
-        project.task('fortify', type: FortifyTask) {
-            conventionMapping.fortifyBuildID = { project.fortify.fortifyBuildID }
-        }
-
-    }
 }
