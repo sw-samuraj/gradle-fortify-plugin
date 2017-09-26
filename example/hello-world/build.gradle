@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+    id 'cz.swsamuraj.fortify' version '0.1.0'
+}
+
+group = 'cz.swsamuraj.hello'
+version = '0.1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+fortify {
+    fortifyBuildID = 'my-fort-proj'
+}

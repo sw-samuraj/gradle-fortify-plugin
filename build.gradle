@@ -8,7 +8,7 @@ dependencies {
     compile localGroovy()
 }
 
-version = '0.1.0-SNAPSHOT'
+version = '0.1.0'
 group = 'cz.swsamuraj'
 
 jar {
