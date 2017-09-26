@@ -1,0 +1,33 @@
+plugins {
+    id 'groovy'
+    id 'com.gradle.plugin-publish' version '0.9.7'
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+version = '0.1.0-SNAPSHOT'
+group = 'cz.swsamuraj'
+
+jar {
+    from(projectDir) {
+        include 'LICENSE'
+        into 'META-INF'
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/sw-samuraj/gradle-fortify-plugin'
+    vcsUrl = 'https://github.com/sw-samuraj/gradle-fortify-plugin'
+    description = 'Gradle plugin for running  Fortify static code analysis.'
+    tags = ['fortify', 'quality', 'qa', 'analysis', 'security']
+
+    plugins {
+        fortifyPlugin {
+            id = 'cz.swsamuraj.fortify'
+            displayName = 'gradle-fortify-plugin'
+        }
+    }
+}
