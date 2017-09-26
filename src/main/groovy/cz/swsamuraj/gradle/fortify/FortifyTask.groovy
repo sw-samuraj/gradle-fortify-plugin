@@ -31,6 +31,7 @@ package cz.swsamuraj.gradle.fortify
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.logging.Logger
+import org.gradle.api.tasks.StopExecutionException
 import org.gradle.api.tasks.TaskAction
 
 class FortifyTask extends DefaultTask {
@@ -39,42 +40,47 @@ class FortifyTask extends DefaultTask {
     String description = 'Security analysis by HP Fortify'
 
     String fortifyBuildID
+    def sourceCompatibility
 
     Logger logger = project.logger
 
     @TaskAction
     def fortify() {
-        logger.info "Running command: sourceanalyzer -b ${fortifyBuildID} -clean"
+        doChecks()
 
-        exec {
-            commandLine 'sourceanalyzer', '-b', fortifyBuildID, '-clean'
-        }
+        exec(['sourceanalyzer', '-b', getFortifyBuildID(), '-clean'])
 
-        def classpath = configurations.compile.asPath
+        def classpath = project.configurations.compile.asPath
 
-        logger.info "Running command: sourceanalyzer -b ${fortifyBuildID} -source " +
-                "${sourceCompatibility} -cp ${classpath} src/**/*.java -exclude src/test/**/*.java"
-
-        exec {
-            commandLine 'sourceanalyzer', '-b', fortifyBuildID, '-source', sourceCompatibility,
-                    '-cp', classpath, 'src/**/*.java', '-exclude', 'src/test/**/*.java'
-        }
+        exec(['sourceanalyzer', '-b', getFortifyBuildID(), '-source', project.sourceCompatibility, '-cp', classpath, 'src/**/*.java', '-exclude', 'src/test/**/*.java'])
 
         def fortifyBuildFolder = 'build/fortify'
         new File(fortifyBuildFolder).mkdirs()
-        def fortifyArtifactFileName = "${fortifyBuildID}@${project.version}.mbs"
+        def fortifyArtifactFileName = "${getFortifyBuildID()}@${project.version}.mbs"
         def fortifyArtifact = "${fortifyBuildFolder}/${fortifyArtifactFileName}"
 
-        logger.info "Running command: sourceanalyzer -b ${fortifyBuildID} -build-label ${project.version} -export-build-session ${fortifyArtifact}"
+        exec(['sourceanalyzer', '-b', getFortifyBuildID(), '-build-label', project.version, '-export-build-session', fortifyArtifact])
 
-        exec {
-            commandLine 'sourceanalyzer', '-b', fortifyBuildID, '-build-label', project.version, '-export-build-session', "${fortifyArtifact}"
+        exec(['sourceanalyzer', '-b', getFortifyBuildID(), '-scan', '-f', "${fortifyBuildFolder}/results.fpr"])
+    }
+
+    def exec(params) {
+        logger.info("[Fortify] ${params.join(' ')}")
+
+        def stdout = new ByteArrayOutputStream()
+
+        project.exec {
+            commandLine(params)
+            standardOutput = stdout
         }
 
-        logger.info "Running command: sourceanalyzer -b ${fortifyBuildID} -scan -f ${fortifyBuildFolder}/results.fpr"
+        stdout.toString()
+    }
 
-        exec {
-            commandLine 'sourceanalyzer', '-b', fortifyBuildID, '-scan', '-f', "${fortifyBuildFolder}/results.fpr"
+    def doChecks() {
+        if (getFortifyBuildID() == null) {
+            logger.warn('[Fortify] Mandatory parameter fortifyBuildID has not been configured.')
+            throw new StopExecutionException()
         }
     }
 

@@ -37,12 +37,11 @@ class FortifyPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
 
-        project.extensions.create('fortify', FortifyExtension).with {
-            fortifyBuildID = "${project.projectDir}/src/main/webapp/WEB-INF/wsdl"
-        }
+        project.extensions.create('fortify', FortifyExtension)
 
         project.task('fortify', type: FortifyTask) {
             conventionMapping.fortifyBuildID = { project.fortify.fortifyBuildID }
+            conventionMapping.sourceCompatibility = { project.sourceCompatibility }
         }
 
     }
