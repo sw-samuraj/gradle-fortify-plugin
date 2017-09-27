@@ -40,7 +40,6 @@ class FortifyTask extends DefaultTask {
     String description = 'Security analysis by HP Fortify'
 
     String fortifyBuildID
-    def sourceCompatibility
 
     Logger logger = project.logger
 
