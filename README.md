@@ -43,7 +43,7 @@ this command is available on `$PATH`.
 
 ```shell
 sourceanalyzer -b <Fortify build ID> -clean
-sourceanalyzer -b <Fortify build ID> -source <source compatibility> -cp <project compile classpath> src/**/*.java -exclude src/test/**/*.java 
+sourceanalyzer -b <Fortify build ID> -source <source compatibility> -cp <project compile classpath> src/**/*.java -exclude src/test/**/*.java
 sourceanalyzer -b <Fortify build ID> -build-label <project version> -export-build-session build/fortify/<Fortify build ID>@<project version>.mbs
 sourceanalyzer -b <Fortify build ID> -scan -f build/fortify/results.fpr
 ```
@@ -53,7 +53,7 @@ be then uploaded to *Fortify Security Center* via `scp`, or *Jenkins*.
 
 ### Config options ###
 
-There must be mandatory part `fortify` in the `build.gradle` file which defines a parameter `fortifyBuildID`.
+There must be a `fortify` part in the `build.gradle` file which defines a mandatory parameter `fortifyBuildID`.
 
 ```groovy
 fortify {
