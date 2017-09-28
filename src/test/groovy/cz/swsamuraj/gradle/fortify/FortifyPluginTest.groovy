@@ -1,6 +1,6 @@
 package cz.swsamuraj.gradle.fortify
 
-import org.gradle.BuildResult
+import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Before
 import org.junit.Rule
