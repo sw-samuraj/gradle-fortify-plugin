@@ -32,6 +32,17 @@ apply plugin: "cz.swsamuraj.fortify"
 
 ## Using the plugin ##
 
+### Prerequisities ###
+
+**Java plugin**
+
+The plugin is meant for analysis of Java source code. Therefore expects an application of the *Java plugin* and
+by default is processing Java *source sets*, excluding *test* source code.
+
+Moreover, it re-uses `sourceCompatibility` property inherited from the *Java plugin*.
+
+**sourceanalyzer**
+
 The plugin requires that you have a local installation of the `sourceanalyzer` tool and that
 this command is available on `$PATH`.
 
@@ -53,12 +64,27 @@ be then uploaded to *Fortify Security Center* via `scp`, or *Jenkins*.
 
 ### Config options ###
 
+**fortifyBuildID**
+
 There must be a `fortify` part in the `build.gradle` file which defines a mandatory parameter `fortifyBuildID`.
 
 ```groovy
 fortify {
     fortifyBuildID = 'my-fort-proj'
 }
+```
+
+**sourceCompatibility**
+
+The `sourceCompatibility` property is inherited from the *Java plugin*. It can be explicitly set via standard *Java
+plugin* configuration:
+
+```groovy
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = 1.8
 ```
 
 ## Example ##
