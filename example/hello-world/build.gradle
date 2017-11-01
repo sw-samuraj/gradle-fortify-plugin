@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'cz.swsamuraj.fortify' version '0.1.2'
+    id 'cz.swsamuraj.fortify' version '0.2.0'
 }
 
 group = 'cz.swsamuraj.hello'
