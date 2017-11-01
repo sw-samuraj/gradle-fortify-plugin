@@ -107,7 +107,9 @@ class FortifyTask extends DefaultTask {
     }
 
     def addExcludeParameter(translateCommand) {
-        translateCommand += ['-exclude', 'src/test/**/*.java']
+        if (!sourceSets.test.java.isEmpty()) {
+            translateCommand += ['-exclude', 'src/test/**/*.java']
+        }
 
         translateCommand
     }
