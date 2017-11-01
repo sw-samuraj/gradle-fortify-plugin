@@ -41,7 +41,6 @@ class FortifyPlugin implements Plugin<Project> {
 
         project.task('fortify', type: FortifyTask) {
             conventionMapping.fortifyBuildID = { project.fortify.fortifyBuildID }
-            conventionMapping.sourceCompatibility = { project.sourceCompatibility }
         }
 
     }
