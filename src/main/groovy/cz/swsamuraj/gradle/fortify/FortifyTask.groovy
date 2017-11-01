@@ -49,9 +49,9 @@ class FortifyTask extends DefaultTask {
 
         exec(['sourceanalyzer', '-b', getFortifyBuildID(), '-clean'])
 
-        def classpath = project.configurations.compile.asPath
+        def translateCommand = assambleTranslateCommand()
 
-        exec(['sourceanalyzer', '-b', getFortifyBuildID(), '-source', project.sourceCompatibility, '-cp', classpath, 'src/**/*.java', '-exclude', 'src/test/**/*.java'])
+        exec(translateCommand)
 
         def fortifyBuildFolder = 'build/fortify'
         new File(fortifyBuildFolder).mkdirs()
@@ -81,6 +81,35 @@ class FortifyTask extends DefaultTask {
             logger.warn('[Fortify] Mandatory parameter fortifyBuildID has not been configured.')
             throw new StopExecutionException()
         }
+    }
+
+    /**
+     * A complete command should look like:
+     * <pre>['sourceanalyzer', '-b', getFortifyBuildID(), '-source', project.sourceCompatibility, '-cp', classpath, 'src/**\/*.java', '-exclude', 'src/test/**|/*.java']</pre>
+     */
+    def assambleTranslateCommand() {
+        def translateCommand = ['sourceanalyzer', '-b', getFortifyBuildID(), '-source', project.sourceCompatibility]
+        translateCommand = addClasspathParameter(translateCommand)
+        translateCommand << 'src/**/*.java'
+        translateCommand = addExcludeParameter(translateCommand)
+
+        translateCommand
+    }
+
+    def addClasspathParameter(translateCommand) {
+        def classpath = project.configurations.compile.asPath
+
+        if (!"".equals(classpath)) {
+            translateCommand += ['-cp', classpath]
+        }
+
+        translateCommand
+    }
+
+    def addExcludeParameter(translateCommand) {
+        translateCommand += ['-exclude', 'src/test/**/*.java']
+
+        translateCommand
     }
 
 }
