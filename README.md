@@ -10,7 +10,7 @@ A Gradle plugin for building of Fortify artifacts for static security analysis.
 
 ```groovy
 plugins {
-    id "cz.swsamuraj.fortify" version "0.1.0"
+    id "cz.swsamuraj.fortify" version "0.1.2"
 }
 ```
 ### All Gradle versions (or local repository) ##
@@ -23,7 +23,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "gradle.plugin.cz.swsamuraj:gradle-fortify-plugin:0.1.0"
+        classpath "gradle.plugin.cz.swsamuraj:gradle-fortify-plugin:0.1.2"
     }
 }
 
