@@ -10,7 +10,7 @@ A Gradle plugin for building of Fortify artifacts for static security analysis.
 
 ```groovy
 plugins {
-    id "cz.swsamuraj.fortify" version "0.2.0"
+    id "cz.swsamuraj.fortify" version "0.3.0"
 }
 ```
 ### All Gradle versions (or local repository) ##
@@ -23,7 +23,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "gradle.plugin.cz.swsamuraj:gradle-fortify-plugin:0.2.0"
+        classpath "gradle.plugin.cz.swsamuraj:gradle-fortify-plugin:0.3.0"
     }
 }
 
@@ -56,11 +56,11 @@ this command is available on `$PATH`.
 sourceanalyzer -b <Fortify build ID> -clean
 sourceanalyzer -b <Fortify build ID> -source <source compatibility> -cp <project compile classpath> src/**/*.java -exclude src/test/**/*.java
 sourceanalyzer -b <Fortify build ID> -build-label <project version> -export-build-session build/fortify/<Fortify build ID>@<project version>.mbs
-sourceanalyzer -b <Fortify build ID> -scan -f build/fortify/results.fpr
+sourceanalyzer -b <Fortify build ID> -scan -f build/fortify/<project-name>-<project-version>.fpr
 ```
 
-Result of this task will be a `results.fpr` file, located in the `build/fortify` directory. The `results.fpr` file can
-be then uploaded to *Fortify Security Center* via `scp`, or *Jenkins*.
+Result of this task will be a `<project-name>-<project-version>.fpr` file, located in the `build/fortify` directory.
+The `<project-name>-<project-version>.fpr` file can be then uploaded to *Fortify Security Center* via `scp`, or *Jenkins*.
 
 ### Config options ###
 
