@@ -62,6 +62,12 @@ sourceanalyzer -b <Fortify build ID> -scan -f build/fortify/<project-name>-<proj
 Result of this task will be a `<project-name>-<project-version>.fpr` file, located in the `build/fortify` directory.
 The `<project-name>-<project-version>.fpr` file can be then uploaded to *Fortify Security Center* via `scp`, or *Jenkins*.
 
+If you want to see exact `sourceanalyzer` commands, you can run *Gradle* with `-i`, or  `--info` switch:
+
+```shell
+$ gradle clean fortify --info
+```
+
 ### Config options ###
 
 **fortifyBuildID**
