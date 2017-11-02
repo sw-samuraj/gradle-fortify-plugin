@@ -60,7 +60,9 @@ class FortifyTask extends DefaultTask {
 
         exec(['sourceanalyzer', '-b', getFortifyBuildID(), '-build-label', project.version, '-export-build-session', fortifyArtifact])
 
-        exec(['sourceanalyzer', '-b', getFortifyBuildID(), '-scan', '-f', "${fortifyBuildFolder}/results.fpr"])
+        def fortifyResult = "${fortifyBuildFolder}/${project.name}-${project.version}.fpr"
+
+        exec(['sourceanalyzer', '-b', getFortifyBuildID(), '-scan', '-f', fortifyResult])
     }
 
     def exec(params) {
